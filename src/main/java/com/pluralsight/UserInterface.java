@@ -179,6 +179,9 @@ public class UserInterface {
         contract = new SaleContract(date, customerName, customerEmail, vehicle, finance);
         ContractFileManager contractFileManager = new ContractFileManager();
         contractFileManager.saveContract(contract);
+        System.out.println("Vehicle successfully sold.");
+        dealership.removeVehicle(vehicle);
+        DealershipFileManager.saveDealership(dealership);
         
     }
     private void processLeaseVehicle(){
@@ -200,6 +203,10 @@ public class UserInterface {
         contract = new LeaseContract(date, customerName, customerEmail, vehicle);
         ContractFileManager contractFileManager = new ContractFileManager();
         contractFileManager.saveContract(contract);
+        System.out.println("Vehicle successfully leased.");
+        dealership.removeVehicle(vehicle);
+        DealershipFileManager.saveDealership(dealership);
+
     }
     
     private int readInt(String prompt) {

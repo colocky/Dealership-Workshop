@@ -58,6 +58,9 @@ public class Dealership {
         }
         return results;
     }
+    public void removeVehicle(Vehicle vehicle){
+        inventory.remove(vehicle);
+    }
 
     public List<Vehicle> getVehiclesByMakeModel(String make, String model) {
         ArrayList<Vehicle> results = new ArrayList<>();

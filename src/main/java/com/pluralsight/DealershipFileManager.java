@@ -42,7 +42,7 @@ public class DealershipFileManager {
         }
     }
 
-    public void saveDealership(Dealership dealership) {
+    public static void saveDealership(Dealership dealership) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(fileName))) {
             writer.printf("%s|%s|%s%n", dealership.getName(), dealership.getAddress(), dealership.getPhone());
 
