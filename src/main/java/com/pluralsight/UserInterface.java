@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class UserInterface {
     private Dealership dealership;
     private DealershipFileManager fileManager;
-    private Scanner scanner;
+    private static Scanner scanner = new Scanner(System.in);
 
     public UserInterface() {
         fileManager = new DealershipFileManager();
@@ -32,6 +32,7 @@ public class UserInterface {
                 case 7 -> displayVehicles(dealership.getAllVehicles());
                 case 8 -> processAddVehicleRequest();
                 case 9 -> processRemoveVehicleRequest();
+                case 10 -> processSaleOrLeaseVehicle();
                 case 99 -> running = false;
                 default -> System.out.println("Invalid choice. Try again.");
             }
@@ -52,6 +53,7 @@ public class UserInterface {
         System.out.println("7 - List ALL vehicles");
         System.out.println("8 - Add a vehicle");
         System.out.println("9 - Remove a vehicle");
+        System.out.println("10 - Sell or Lease a Vehicle");
         System.out.println("99 - Quit");
     }
 
@@ -136,6 +138,67 @@ public class UserInterface {
         }
     }
 
+    private void processSaleOrLeaseVehicle() {
+        System.out.print("""
+                1. Sell
+                2. Lease
+                Please choose your option: 
+                """);
+        int contractType = Integer.parseInt(scanner.nextLine());
+        switch (contractType) {
+            case 1 -> processSellVehicle();
+            case 2 -> processLeaseVehicle();
+            default -> {
+                System.out.println("Invalid choice.");
+                return;
+            }
+
+        }
+    }
+    
+    private void processSellVehicle(){
+        System.out.println("Enter VIN:");
+        int vin = scanner.nextInt();
+        scanner.nextLine();
+        Vehicle vehicle = dealership.getVehicleByVin(vin);
+        if(vehicle == null){
+            System.out.println("Vehicle is not found.");
+            return;
+        }
+        System.out.println("Enter customer name:");
+        String customerName = scanner.nextLine();
+        System.out.println("Enter customer email:");
+        String customerEmail = scanner.nextLine();
+        System.out.println("Enter contract date(YYYY-MM-DD):");
+        String date = scanner.nextLine();
+        Contract contract;
+
+        System.out.println("Do they want to finance?(yes/no)");
+        String financeChoice = scanner.nextLine();
+        boolean finance = financeChoice.equalsIgnoreCase("yes");
+        contract = new SaleContract(date, customerName, customerEmail, vehicle, finance);
+        
+    }
+    private void processLeaseVehicle(){
+        System.out.println("Enter VIN:");
+        int vin = scanner.nextInt();
+        scanner.nextLine();
+        Vehicle vehicle = dealership.getVehicleByVin(vin);
+        if(vehicle == null){
+            System.out.println("Vehicle is not found.");
+            return;
+        }
+        System.out.println("Enter customer name:");
+        String customerName = scanner.nextLine();
+        System.out.println("Enter customer email:");
+        String customerEmail = scanner.nextLine();
+        System.out.println("Enter contract date(YYYY-MM-DD):");
+        String date = scanner.nextLine();
+        Contract contract;
+        contract = new LeaseContract(date, customerName, customerEmail, vehicle);
+
+    }
+    
     private int readInt(String prompt) {
         while (true) {
             try {
