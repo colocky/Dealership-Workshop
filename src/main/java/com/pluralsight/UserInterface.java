@@ -177,6 +177,8 @@ public class UserInterface {
         String financeChoice = scanner.nextLine();
         boolean finance = financeChoice.equalsIgnoreCase("yes");
         contract = new SaleContract(date, customerName, customerEmail, vehicle, finance);
+        ContractFileManager contractFileManager = new ContractFileManager();
+        contractFileManager.saveContract(contract);
         
     }
     private void processLeaseVehicle(){
@@ -196,7 +198,8 @@ public class UserInterface {
         String date = scanner.nextLine();
         Contract contract;
         contract = new LeaseContract(date, customerName, customerEmail, vehicle);
-
+        ContractFileManager contractFileManager = new ContractFileManager();
+        contractFileManager.saveContract(contract);
     }
     
     private int readInt(String prompt) {
