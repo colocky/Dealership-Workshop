@@ -43,8 +43,8 @@ public abstract class Contract {
         return vehicleSold;
     }
 
-    public Vehicle setVehicleSold(boolean vehicleSold) {
-        this.vehicleSold = vehicleSold;
+    public Vehicle setVehicleSold(Vehicle vehicleSold) {
+        return vehicleSold;
     }
 
 
